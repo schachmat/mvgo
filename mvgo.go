@@ -1,15 +1,19 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
 //	"io/ioutil"
 	"log"
 	"os"
+	"go/build"
 	"net/http"
 	"net/url"
+	"code.google.com/p/go-charset/charset"
+//	"code.google.com/p/go-charset/charsets"
 	"code.google.com/p/go.net/html"
-	"code.google.com/p/go.net/html/charset"
+	hcs "code.google.com/p/go.net/html/charset"
 )
 
 const uri = "http://www.mvg-live.de/ims/dfiStaticAuswahl.svc?"
@@ -30,10 +34,22 @@ func parse_arg(t string) {
 			}
 		}
 	} else if !gotstation {
-		params = append(params, "haltestelle=" + url.QueryEscape(t))
+		buf := new(bytes.Buffer)
+		w, err := charset.NewWriter("latin1", buf)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Fprintf(w, t)
+		w.Close()
+		fmt.Printf("%q\n", buf.Bytes())
+		params = append(params, "haltestelle=" + url.QueryEscape(string(buf.Bytes())))
 		gotstation = true
 	}
 }
+
+//func find_first(n *html.Node, tag atom.Atom, key, val string) *html.Node {
+
+//}
 
 func parse_departure_line(n *html.Node) {
 	var line, station, departure string
@@ -110,6 +126,7 @@ func find_table(n *html.Node) *html.Node {
 }
 
 func main() {
+	charset.CharsetDir = build.Default.GOPATH + "/src/code.google.com/p/go-charset/datafiles"
 	for i := 1; i < len(os.Args); i++ {
 		parse_arg(os.Args[i])
 	}
@@ -120,7 +137,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	r, err := charset.NewReader(res.Body, res.Header["Content-Type"][0])
+	r, err := hcs.NewReader(res.Body, res.Header["Content-Type"][0])
 	if err != nil {
 		log.Fatal(err)
 	}
