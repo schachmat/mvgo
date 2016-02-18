@@ -16,7 +16,7 @@ import (
 	"github.com/schachmat/mvgo/iface"
 )
 
-type efaMvv struct {
+type efaMvvConfig struct {
 }
 
 type efaMvvResponse struct {
@@ -35,10 +35,10 @@ const (
 	efaMvvDuri = "http://efa.mvv-muenchen.de/mobile/XSLT_DM_REQUEST?outputFormat=JSON&stateless=1&coordOutputFormat=WGS84&type_dm=stop&itOptionsActive=1&ptOptionsActive=1&mergeDep=1&useAllStops=1&mode=direct"
 )
 
-func (c *efaMvv) Setup() {
+func (c *efaMvvConfig) Setup() {
 }
 
-func (c *efaMvv) GetDepartures(station string) []iface.Departure {
+func (c *efaMvvConfig) GetDepartures(station string) []iface.Departure {
 	var buf bytes.Buffer
 	w := transform.NewWriter(&buf, charmap.ISO8859_1.NewEncoder())
 	fmt.Fprintf(w, station)
@@ -77,5 +77,5 @@ func (c *efaMvv) GetDepartures(station string) []iface.Departure {
 }
 
 func init() {
-	iface.AllBackends["efa-mvv"] = &efaMvv{}
+	iface.AllBackends["efa-mvv"] = &efaMvvConfig{}
 }

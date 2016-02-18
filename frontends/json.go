@@ -9,15 +9,15 @@ import (
 	"github.com/schachmat/mvgo/iface"
 )
 
-type feJson struct {
+type jsonConfig struct {
 	noIndent bool
 }
 
-func (c *feJson) Setup() {
+func (c *jsonConfig) Setup() {
 	flag.BoolVar(&c.noIndent, "json-no-indent", false, "json frontend: do not indent the output")
 }
 
-func (c *feJson) RenderDepartures(station string, deps []iface.Departure) {
+func (c *jsonConfig) RenderDepartures(station string, deps []iface.Departure) {
 	var b []byte
 	var err error
 	if c.noIndent {
@@ -32,5 +32,5 @@ func (c *feJson) RenderDepartures(station string, deps []iface.Departure) {
 }
 
 func init() {
-	iface.AllFrontends["json"] = &feJson{}
+	iface.AllFrontends["json"] = &jsonConfig{}
 }

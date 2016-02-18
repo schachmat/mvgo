@@ -17,7 +17,7 @@ import (
 	"github.com/schachmat/mvgo/iface"
 )
 
-type mvgLive struct {
+type mvgLiveConfig struct {
 	bus      bool
 	tram     bool
 	subway   bool
@@ -29,7 +29,7 @@ const (
 	mvgLiveDuri = "https://www.mvg-live.de/ims/dfiStaticAuswahl.svc?"
 )
 
-func (c *mvgLive) parse_departure_line(n *html.Node) {
+func (c *mvgLiveConfig) parse_departure_line(n *html.Node) {
 	var line, station, departure string
 	for child := n.FirstChild; child != nil; child = child.NextSibling {
 		if child.Type != html.ElementNode || child.Data != "td" {
@@ -64,7 +64,7 @@ func (c *mvgLive) parse_departure_line(n *html.Node) {
 	})
 }
 
-func (c *mvgLive) parse_departures(n *html.Node) {
+func (c *mvgLiveConfig) parse_departures(n *html.Node) {
 	if n.Type == html.ElementNode && n.Data == "tr" {
 		for _, a := range n.Attr {
 			if a.Key == "class" && (a.Val == "rowOdd" || a.Val == "rowEven") {
@@ -77,7 +77,7 @@ func (c *mvgLive) parse_departures(n *html.Node) {
 	}
 }
 
-//func (c *mvgLive) parse_stations(n *html.Node) {
+//func (c *mvgLiveConfig) parse_stations(n *html.Node) {
 //	if n.Type == html.ElementNode && n.Data == "a" {
 //		for _, a := range n.Attr {
 //			if a.Key == "href" && strings.HasPrefix(a.Val, "/ims/dfiStatic") {
@@ -90,7 +90,7 @@ func (c *mvgLive) parse_departures(n *html.Node) {
 //	}
 //}
 
-func (c *mvgLive) find_table(n *html.Node) *html.Node {
+func (c *mvgLiveConfig) find_table(n *html.Node) *html.Node {
 	if n.Type == html.ElementNode && n.Data == "table" {
 		for _, a := range n.Attr {
 			if a.Key == "class" && a.Val == "departureTable departureView" {
@@ -112,14 +112,14 @@ func (c *mvgLive) find_table(n *html.Node) *html.Node {
 	return nil
 }
 
-func (c *mvgLive) Setup() {
+func (c *mvgLiveConfig) Setup() {
 	flag.BoolVar(&c.bus, "mvgl-bus", true, "mvg-live backend: show bus departures")
 	flag.BoolVar(&c.tram, "mvgl-tram", true, "mvg-live backend: show tram departures")
 	flag.BoolVar(&c.subway, "mvgl-subway", true, "mvg-live backend: show subway departures")
 	flag.BoolVar(&c.suburban, "mvgl-suburban", true, "mvg-live backend: show suburban departures")
 }
 
-func (c *mvgLive) GetDepartures(station string) []iface.Departure {
+func (c *mvgLiveConfig) GetDepartures(station string) []iface.Departure {
 	params := make([]string, 5)
 
 	var buf bytes.Buffer
@@ -161,5 +161,5 @@ func (c *mvgLive) GetDepartures(station string) []iface.Departure {
 }
 
 func init() {
-	iface.AllBackends["mvg-live"] = &mvgLive{}
+	iface.AllBackends["mvg-live"] = &mvgLiveConfig{}
 }
