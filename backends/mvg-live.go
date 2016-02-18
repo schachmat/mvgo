@@ -26,7 +26,7 @@ type mvgLive struct {
 }
 
 const (
-	duri = "https://www.mvg-live.de/ims/dfiStaticAuswahl.svc?"
+	mvgLiveDuri = "https://www.mvg-live.de/ims/dfiStaticAuswahl.svc?"
 )
 
 func (c *mvgLive) parse_departure_line(n *html.Node) {
@@ -137,7 +137,7 @@ func (c *mvgLive) GetDepartures(station string) []iface.Departure {
 		params = append(params, "sbahn=checked")
 	}
 
-	res, err := http.Get(duri + strings.Join(params, "&"))
+	res, err := http.Get(mvgLiveDuri + strings.Join(params, "&"))
 	defer res.Body.Close()
 	if err != nil {
 		log.Fatal(err)
