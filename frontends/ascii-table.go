@@ -13,7 +13,7 @@ type atConfig struct {
 }
 
 func (c *atConfig) Setup() {
-	flag.IntVar(&c.num, "ascii-table-num", 10, "ascii-table frontend: `NUMBER` of departures to display\n0 means show all")
+	flag.IntVar(&c.num, "ascii-table-num", 10, "ascii-table frontend: `NUMBER` of departures to display\n    \t0 means show all")
 }
 
 func (c *atConfig) RenderDepartures(station string, deps []iface.Departure) {
