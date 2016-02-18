@@ -1,6 +1,7 @@
 package frontends
 
 import (
+	"flag"
 	"fmt"
 	"time"
 
@@ -8,15 +9,19 @@ import (
 )
 
 type mvglAscii struct {
+	num int
 }
 
 func (c *mvglAscii) Setup() {
-
+	flag.IntVar(&c.num, "ascii-table-num", 10, "ascii-table frontend: `NUMBER` of departures to display\n0 means show all")
 }
 
 func (c *mvglAscii) RenderDepartures(station string, deps []iface.Departure) {
 	fmt.Println("The next departures from", station, "are:")
-	for _, dep := range deps {
+	for i, dep := range deps {
+		if c.num != 0 && i >= c.num {
+			break
+		}
 		fmt.Printf("%3d  %-4s  %s\n", dep.Eta/time.Minute, dep.Line, dep.Destination)
 	}
 }
