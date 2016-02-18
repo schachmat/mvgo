@@ -57,7 +57,11 @@ func (c *mvgLive) parse_departure_line(n *html.Node) {
 	if err != nil {
 		log.Println("Unable to parse departure time:", err)
 	}
-	c.ret = append(c.ret, iface.Departure{line, station, iface.JsonDuration(eta)})
+	c.ret = append(c.ret, iface.Departure{
+		Line:        line,
+		Destination: station,
+		Eta:         iface.JsonDuration(eta),
+	})
 }
 
 func (c *mvgLive) parse_departures(n *html.Node) {

@@ -22,7 +22,7 @@ type Frontend interface {
 	RenderDepartures(station string, deps []Departure)
 }
 
-func (d JsonDuration)MarshalJSON() ([]byte, error) {
+func (d JsonDuration) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + time.Duration(d).String() + "\""), nil
 }
 
