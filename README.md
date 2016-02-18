@@ -1,6 +1,4 @@
-#mvgo
-
-mvgo is a command line tool to list public transport departure times.
+**mvgo** is a command line tool to list public transport departure times.
 
 ##Features and limitations
 
