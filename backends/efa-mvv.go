@@ -66,7 +66,7 @@ func (c *efaMvv) GetDepartures(station string) []iface.Departure {
 
 	var ret []iface.Departure
 	for _, dep := range resp.Departures {
-		ret = append(ret, iface.Departure{dep.Line.Name, dep.Line.Destination, time.Duration(dep.Eta) * time.Minute})
+		ret = append(ret, iface.Departure{dep.Line.Name, dep.Line.Destination, iface.JsonDuration(time.Duration(dep.Eta) * time.Minute)})
 	}
 
 	return ret

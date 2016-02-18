@@ -4,10 +4,12 @@ import (
 	"time"
 )
 
+type JsonDuration time.Duration
+
 type Departure struct {
 	Line        string
 	Destination string
-	Eta         time.Duration
+	Eta         JsonDuration `json:"string"`
 }
 
 type Backend interface {
@@ -18,6 +20,10 @@ type Backend interface {
 type Frontend interface {
 	Setup()
 	RenderDepartures(station string, deps []Departure)
+}
+
+func (d JsonDuration)MarshalJSON() ([]byte, error) {
+	return []byte("\"" + time.Duration(d).String() + "\""), nil
 }
 
 var (

@@ -22,7 +22,7 @@ func (c *mvglAscii) RenderDepartures(station string, deps []iface.Departure) {
 		if c.num != 0 && i >= c.num {
 			break
 		}
-		fmt.Printf("%3d  %-4s  %s\n", dep.Eta/time.Minute, dep.Line, dep.Destination)
+		fmt.Printf("%3d  %-4s  %s\n", time.Duration(dep.Eta)/time.Minute, dep.Line, dep.Destination)
 	}
 }
 
