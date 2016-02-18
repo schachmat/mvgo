@@ -6,6 +6,10 @@ import (
 
 type JsonDuration time.Duration
 
+func (d JsonDuration) MarshalJSON() ([]byte, error) {
+	return []byte("\"" + time.Duration(d).String() + "\""), nil
+}
+
 type Departure struct {
 	Line        string
 	Destination string
@@ -20,10 +24,6 @@ type Backend interface {
 type Frontend interface {
 	Setup()
 	RenderDepartures(station string, deps []Departure)
-}
-
-func (d JsonDuration) MarshalJSON() ([]byte, error) {
-	return []byte("\"" + time.Duration(d).String() + "\""), nil
 }
 
 var (
