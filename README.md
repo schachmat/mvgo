@@ -5,9 +5,9 @@ mvgo is a command line tool to list public transport departure times.
 ##Features and limitations
 
 * Requires Go 1.5
-* Automatic config management with [ingo](/schachmat/ingo)
+* Automatic config management with [ingo](https://github.com/schachmat/ingo)
 * Supported backends:
-  * [mvg live](http://www.mvg-live.de/MvgLive/MvgLive.jsp)
+  * [mvg live](https://www.mvg-live.de/)
   * [mvv efa](http://efa.mvv-muenchen.de/)
 * Supported frontends:
   * ascii table: Lists the departure times in rows
