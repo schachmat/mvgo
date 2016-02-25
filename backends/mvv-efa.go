@@ -16,10 +16,10 @@ import (
 	"github.com/schachmat/mvgo/iface"
 )
 
-type efaMvvConfig struct {
+type mvvEfaConfig struct {
 }
 
-type efaMvvResponse struct {
+type mvvEfaResponse struct {
 	Departures []struct {
 		Eta  int `json:"countdown,string"`
 		Line struct {
@@ -32,19 +32,19 @@ type efaMvvResponse struct {
 const (
 	// &language=de // Tests showed this gets ignored by MVV, but set to language nevertheles
 	// &name_dm=Freising // This is the actual query string
-	efaMvvDuri = "http://efa.mvv-muenchen.de/mobile/XSLT_DM_REQUEST?outputFormat=JSON&stateless=1&coordOutputFormat=WGS84&type_dm=stop&itOptionsActive=1&ptOptionsActive=1&mergeDep=1&useAllStops=1&mode=direct"
+	mvvEfaDuri = "http://efa.mvv-muenchen.de/mobile/XSLT_DM_REQUEST?outputFormat=JSON&stateless=1&coordOutputFormat=WGS84&type_dm=stop&itOptionsActive=1&ptOptionsActive=1&mergeDep=1&useAllStops=1&mode=direct"
 )
 
-func (c *efaMvvConfig) Setup() {
+func (c *mvvEfaConfig) Setup() {
 }
 
-func (c *efaMvvConfig) GetDepartures(station string) []iface.Departure {
+func (c *mvvEfaConfig) GetDepartures(station string) []iface.Departure {
 	var buf bytes.Buffer
 	w := transform.NewWriter(&buf, charmap.ISO8859_1.NewEncoder())
 	fmt.Fprintf(w, station)
 	w.Close()
 
-	res, err := http.Get(efaMvvDuri + "&name_dm=" + url.QueryEscape(string(buf.Bytes())))
+	res, err := http.Get(mvvEfaDuri + "&name_dm=" + url.QueryEscape(string(buf.Bytes())))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,7 +59,7 @@ func (c *efaMvvConfig) GetDepartures(station string) []iface.Departure {
 		log.Fatal(err)
 	}
 
-	var resp efaMvvResponse
+	var resp mvvEfaResponse
 	if err = json.Unmarshal(body, &resp); err != nil {
 		log.Fatal(err)
 	}
@@ -77,5 +77,5 @@ func (c *efaMvvConfig) GetDepartures(station string) []iface.Departure {
 }
 
 func init() {
-	iface.AllBackends["efa-mvv"] = &efaMvvConfig{}
+	iface.AllBackends["mvv-efa"] = &mvvEfaConfig{}
 }
