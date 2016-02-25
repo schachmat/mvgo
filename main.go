@@ -3,9 +3,6 @@ package main
 import (
 	"flag"
 	"log"
-	"os"
-	"os/user"
-	"path"
 
 	"github.com/schachmat/ingo"
 	_ "github.com/schachmat/mvgo/backends"
@@ -14,15 +11,6 @@ import (
 )
 
 func main() {
-	configpath := os.Getenv("MVGORC")
-	if configpath == "" {
-		usr, err := user.Current()
-		if err != nil {
-			log.Fatalf("%v\nYou can set the environment variable MVGORC to point to your config file as a workaround.", err)
-		}
-		configpath = path.Join(usr.HomeDir, ".mvgorc")
-	}
-
 	// initialize backends and frontends (flags and default config)
 	for _, be := range iface.AllBackends {
 		be.Setup()
@@ -37,7 +25,9 @@ func main() {
 	selectedFrontend := flag.String("frontend", "ascii-table", "`FRONTEND` to be used")
 
 	// read/write config and parse flags
-	ingo.Parse(configpath)
+	if err := ingo.Parse("mvgo"); err != nil {
+		log.Fatalf("Error parsing config: %v", err)
+	}
 
 	// non-flag argument overwrites station flag
 	if len(flag.Args()) > 0 {
