@@ -1,0 +1,126 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style type="text/css" medium="screen">
+body {
+	font-size: 8vw;
+	font-family: ubuntu, verdana, helvetica, arial, sans-serif;
+	margin: 0;
+	overflow-y: hidden;
+}
+
+div.clear {
+	clear: both;
+}
+
+div.header {
+	background: darkblue;
+	height: 1.2em;
+	padding: 0.15em 0.25em 0.25em 0.25em;
+}
+
+div.header img.logo {
+	height: 1em;
+}
+
+div.header div.clock {
+	float: right;
+	color: white;
+}
+
+div.tableheader {
+	font-size: 50%;
+	background: blue;
+	color: white;
+	padding: 0.7em 0.5em;
+}
+
+div.table {
+	font-size: 42%;
+}
+
+div.table div.row {
+	padding: 0.4em 0.5em;
+}
+
+div.table div.row:nth-child(odd) {
+	background: white;
+}
+
+div.table div.row:nth-child(even) {
+	background: lightgray;
+}
+
+div.left {
+	float: left;
+	width: 15%;
+}
+
+div.mid {
+	float: left;
+	width: 70%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+div.right {
+	float: right;
+	width: 15%;
+	text-align: right;
+}
+
+div.footer {
+	font-size: 42%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: darkorange;
+}
+
+div.footer div.footercontent {
+	padding: 0.4em 0.5em;
+}
+	</style>
+</head>
+<body>
+<div class="header">
+	<img class="logo" src="logo"/>
+	<div class="clock">
+		{{.Clock}}
+	</div>
+</div>
+<div class="clear"></div>
+<div class="tableheader">
+	<div class="left">Line</div>
+	<div class="mid">Destination</div>
+	<div class="right">In Min</div>
+	<div class="clear"></div>
+</div>
+<div class="table">
+{{range .Data}}
+	<div class="row">
+		<div class="left">{{.Line}}</div>
+		<div class="mid">{{.Destination}}</div>
+		<div class="right">{{.EtaNanoSec.Minutes}}</div>
+		<div class="clear"></div>
+	</div>
+{{else}}
+	<div class="row">
+		<div class="left">😥</div>
+		<div class="mid">No upcoming departures.</div>
+		<div class="right">☃</div>
+		<div class="clear"></div>
+	</div>
+{{end}}
+</div>
+{{if .Message}}
+<div class="footer">
+	<div class="footercontent">
+		<marquee>{{.Message}}</marquee>
+	</div>
+</div>
+{{end}}
+</body>
+</html>
