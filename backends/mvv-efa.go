@@ -69,7 +69,7 @@ func (c *mvvEfaConfig) GetDepartures(station string) []iface.Departure {
 		ret = append(ret, iface.Departure{
 			Line:        dep.Line.Name,
 			Destination: dep.Line.Destination,
-			Eta:         iface.JsonDuration(time.Duration(dep.Eta) * time.Minute),
+			EtaNanoSec:  time.Duration(dep.Eta) * time.Minute,
 		})
 	}
 

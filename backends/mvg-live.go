@@ -60,7 +60,7 @@ func (c *mvgLiveConfig) parse_departure_line(n *html.Node) {
 	c.ret = append(c.ret, iface.Departure{
 		Line:        line,
 		Destination: station,
-		Eta:         iface.JsonDuration(eta),
+		EtaNanoSec:  eta,
 	})
 }
 
@@ -147,6 +147,7 @@ func (c *mvgLiveConfig) GetDepartures(station string) []iface.Departure {
 		log.Fatal(err)
 	}
 
+	c.ret = []iface.Departure{}
 	r, err := hcs.NewReader(res.Body, res.Header["Content-Type"][0])
 	if err != nil {
 		log.Fatal(err)

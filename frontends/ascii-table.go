@@ -3,7 +3,6 @@ package frontends
 import (
 	"flag"
 	"fmt"
-	"time"
 
 	"github.com/schachmat/mvgo/iface"
 )
@@ -22,7 +21,7 @@ func (c *atConfig) RenderDepartures(station string, deps []iface.Departure) {
 		if c.num != 0 && i >= c.num {
 			break
 		}
-		fmt.Printf("%3d  %-4s  %s\n", time.Duration(dep.Eta)/time.Minute, dep.Line, dep.Destination)
+		fmt.Printf("%3d  %-4s  %s\n", uint(dep.EtaNanoSec.Minutes()), dep.Line, dep.Destination)
 	}
 }
 
