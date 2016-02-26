@@ -41,6 +41,9 @@ func main() {
 	}
 	r := be.GetDepartures(*station)
 
+	// sort
+	iface.By(iface.Eta).Sort(r)
+
 	// get selected frontend and render the result
 	fe, ok := iface.AllFrontends[*selectedFrontend]
 	if !ok {
