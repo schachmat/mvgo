@@ -7,9 +7,11 @@
 * Supported backends:
   * [mvg live](https://www.mvg-live.de/)
   * [mvv efa](http://efa.mvv-muenchen.de/)
+  * merger: Merges input from two different backends
 * Supported frontends:
   * ascii table: Lists the departure times in rows
   * json: Can be useful to be consumed by other tools
+  * template: Builds a html page from a template usable for live ticker screens
 
 ##Installation
 
