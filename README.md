@@ -1,6 +1,6 @@
 **mvgo** is a command line tool to list public transport departure times.
 
-##Features and limitations
+## Features and limitations
 
 * Requires Go 1.5
 * Automatic config management with [ingo](https://github.com/schachmat/ingo)
@@ -13,13 +13,13 @@
   * json: Can be useful to be consumed by other tools
   * template: Builds a html page from a template usable for live ticker screens
 
-##Installation
+## Installation
 
 ```shell
 go get -u github.com/schachmat/mvgo
 ```
 
-##Usage example
+## Usage example
 
 ```shell
 $ mvgo "Münchner Freiheit"
@@ -39,12 +39,12 @@ The next departures from Münchner Freiheit are:
 A default station can also be saved in the `~/.mvgorc` configuration file. The
 config path is customizable with the `MVGORC` environment variable.
 
-##Contributing
+## Contributing
 
 If you want your local public transport provider to be supported, write your own
 backend and make a Pull Request. Ideas for new frontends are also welcome.
 
-##License - ISC
+## License - ISC
 
 Copyright (c) 2016,  <teichm@in.tum.de>
 
