@@ -144,17 +144,17 @@ func (c *mvgLiveConfig) GetDepartures(station string) []iface.Departure {
 	res, err := http.Get(mvgLiveDuri + strings.Join(params, "&"))
 	defer res.Body.Close()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Unable to GET mvg-live result:", err)
 	}
 
 	c.ret = []iface.Departure{}
 	r, err := hcs.NewReader(res.Body, res.Header["Content-Type"][0])
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Unable to create reader for source charset:", err)
 	}
 	doc, err := html.Parse(r)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Unable to parse html:", err)
 	}
 
 	c.find_table(doc)
