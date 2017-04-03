@@ -46,7 +46,7 @@ backend and make a Pull Request. Ideas for new frontends are also welcome.
 
 ## License - ISC
 
-Copyright (c) 2016,  <teichm@in.tum.de>
+Copyright (c) 2016-2017,  <teichm@in.tum.de>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
